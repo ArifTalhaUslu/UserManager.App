@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserManager.Common\UserManager.Common.csproj" />
+    <ProjectReference Include="..\UserManager.DataAccess\UserManager.DataAccess.csproj" />
+    <ProjectReference Include="..\UserManager.Entity\UserManager.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

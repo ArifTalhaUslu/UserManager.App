@@ -1,0 +1,141 @@
+﻿@using UserManager.Entity.Entities
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container p-3">
+
+    <h2>Hello</h2>
+
+    <h3>User List</h3>
+
+    <!-- Button trigger modal -->
+    <a class="btn btn-success my-2" data-toggle="modal" data-target="#addmodal">
+        Add New User
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="/User/AddUser" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add New User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" placeholder="User Name" class="form-control my-2" name="UserName" />
+                        <input type="email" placeholder="Email" class="form-control my-2" name="Email" />
+                        <input type="number" placeholder="Phone Number" class="form-control my-2" name="PhoneNumber" />
+                        <input type="password" placeholder="Password" class="form-control my-2" name="Password" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Add User">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>@item.PhoneNumber</td>
+
+                        <th>
+                            <!-- Button trigger modal -->
+                            <a class="btn btn-warning" data-toggle="modal" data-target="#updatemodal-@item.Id">
+                                Update
+                            </a>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="updatemodal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form action="/User/UpdateUser" method="post">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Update User - @item.UserName</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="Id" value="@item.Id" />
+                                                <input type="text" placeholder="User Name" class="form-control my-2" name="UserName" value="@item.UserName" />
+                                                <input type="email" placeholder="Email" class="form-control my-2" name="Email" value="@item.Email" />
+                                                <input type="number" placeholder="Phone Number" class="form-control my-2" name="PhoneNumber" value="@item.PhoneNumber" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type="submit" class="btn btn-primary" value="Update @item.UserName">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
+                            <!-- Button trigger modal -->
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#deletemodal-@item.Id">
+                                Delete
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deletemodal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form action="/User/DeleteUser" method="post">
+                                            <div class="modal-header bg-danger">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Delete User - @item.UserName</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="Id" value="@item.Id" />
+                                                <h4>Are you sure you want to delete @item.UserName ?</h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <input type="submit" class="btn btn-danger" value="Delete @item.UserName">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <div class="bg-secondary">
+                            <h3 class="text-danger">There is no entry</h3>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
